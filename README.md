@@ -39,12 +39,6 @@ Seeding Checker就是为解决这些问题而设计的，帮助用户轻松找�
 # 创建配置和输出目录
 mkdir -p seeding-checker/config seeding-checker/output
 
-# 下载配置文件模板
-curl -o seeding-checker/config/config.ini https://raw.githubusercontent.com/yourusername/seeding-checker/main/config.ini
-
-# 编辑配置文件
-nano seeding-checker/config/config.ini
-
 # 启动容器
 docker run -d \
   --name=seeding-checker \
@@ -57,34 +51,51 @@ docker run -d \
   yourusername/seeding-checker:latest
 ```
 
+容器首次启动时会自动在`config`目录中创建默认配置文件`config.ini`。您可以编辑此文件以配置您的NAS目录、下载器信息等。
+
 ### 使用Docker Compose
 
-1. 创建 `docker-compose.yml`:
+1. 创建必要的目录结构:
+   ```bash
+   mkdir -p config output
+   ```
 
-```yaml
-version: '3'
+2. 创建 `docker-compose.yml`:
+   ```yaml
+   version: '3'
+   
+   services:
+     seeding-checker:
+       image: yourusername/seeding-checker:latest
+       container_name: seeding-checker
+       restart: unless-stopped
+       volumes:
+         - ./config:/app/config
+         - ./output:/app/output
+         # 您的NAS挂载点 - 请根据您的实际路径调整
+         - /path/to/nas/data1:/path/to/nas/data1:ro
+         - /path/to/nas/data2:/path/to/nas/data2:ro
+       environment:
+         - TZ=Asia/Shanghai
+         - CONFIG_FILE=/app/config/config.ini
+       user: "${UID:-1000}:${GID:-1000}"
+   ```
 
-services:
-  seeding-checker:
-    image: yourusername/seeding-checker:latest
-    container_name: seeding-checker
-    restart: unless-stopped
-    volumes:
-      - ./config:/app/config:ro
-      - ./output:/app/output
-      # 您的NAS挂载点 - 请根据您的实际路径调整
-      - /path/to/nas/data1:/path/to/nas/data1:ro
-      - /path/to/nas/data2:/path/to/nas/data2:ro
-    environment:
-      - TZ=Asia/Shanghai
-      - CONFIG_FILE=/app/config/config.ini
-    user: "${UID:-1000}:${GID:-1000}"
-```
+3. 启动服务:
+   ```bash
+   docker-compose up -d
+   ```
 
-2. 启动服务:
+服务首次启动时会自动在`config`目录中创建默认配置文件`config.ini`。启动后，您可以根据需要编辑这个文件：
 
 ```bash
-docker-compose up -d
+nano config/config.ini
+```
+
+修改配置后，重启容器使更改生效：
+
+```bash
+docker-compose restart
 ```
 
 ### 从源码构建
