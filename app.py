@@ -1027,10 +1027,10 @@ def format_missing_seeding_output(missing_files):
     return "\n".join(output)
 
 # 执行检查
-def run_check():
+def run_check(config_file):
     logger.info("开始检查冗余文件...")
     
-    config = load_config()
+    config = load_config(config_file)
     output_file_prefix = config['general'].get('output_file', 'redundant_files')
     
     # 如果output_file_prefix没有指定路径，添加默认的/app/output路径前缀
@@ -1183,12 +1183,12 @@ def main():
         logger.info(f"计划任务时间: {schedule_time}")
         
         # 设置定时任务
-        schedule.every().day.at(schedule_time).do(run_check)
+        schedule.every().day.at(schedule_time).do(run_check,args.config)
         logger.info(f"已设置每日 {schedule_time} 执行检查")
         
         # 无论--now参数是否指定，都立即执行一次检查
         logger.info("程序启动，立即执行检查...")
-        run_check()
+        run_check(args.config)
         
         # 保持程序运行
         logger.info("进入主循环，等待执行计划任务...")
