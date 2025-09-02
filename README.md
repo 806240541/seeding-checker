@@ -1,6 +1,6 @@
 # Seeding Checker (做种检查器)
 
-一个功能强大的工具，用于检查NAS文件系统与BT客户端做种文件的同步状态，帮助您高效管理种子文件和优化存储空间。
+一个功能强大的工具，用于检查NAS文件系统与BT客户端做种文件的同步状态，帮助您高效管理种子文件和优化存储空间 。
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/yourusername/seeding-checker/main/docs/logo.png" alt="Seeding Checker Logo" width="200"/>
