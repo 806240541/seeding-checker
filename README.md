@@ -2,9 +2,6 @@
 
 一个功能强大的工具，用于检查NAS文件系统与BT客户端做种文件的同步状态，帮助您高效管理种子文件和优化存储空间 。
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/yourusername/seeding-checker/main/docs/logo.png" alt="Seeding Checker Logo" width="200"/>
-</p>
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/yourusername/seeding-checker)
 [![Docker Hub](https://img.shields.io/badge/Docker-Hub-blue)](https://hub.docker.com/r/yourusername/seeding-checker)
